@@ -68,7 +68,7 @@ def hello():
         if request.args.get("hub.verify_token") == VERIFY_TOKEN:
             return request.args.get("hub.challenge")
         else:
-            return 'Invalid verification token'
+            return 'This website is under construction !!!'
 
     if request.method == 'POST':
         output = request.get_json()
