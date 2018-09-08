@@ -164,7 +164,7 @@ def handle_text_message(event):
         template_message = TemplateSendMessage(
             alt_text='Confirm alt text', template=confirm_template)
         line_bot_api.reply_message(event.reply_token, template_message)
-    elif text1 in ['hi','hello','sainu']:
+    elif text1 in ['hi','hello','sainu','launch']:
         buttons_template = ButtonsTemplate(
             title='Services', text='Hello. I am TiTAX LINE assistant.Please choose your service', actions=[
                 URIAction(label='Go to TokyoTech Web', uri='https://www.titech.ac.jp/english/'),
