@@ -322,7 +322,7 @@ def handle_text_message(event):
                                 "n1":"https://www.google.com/maps/place/35%C2%B036'24.2%22N+139%C2%B040'51.8%22E/@35.6067034,139.6460346,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6067089!4d139.6810535","n2":"https://www.google.com/maps/place/35%C2%B036'23.9%22N+139%C2%B040'49.7%22E/@35.6066194,139.6454636,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6066249!4d139.680483",
                                 "m1":"https://www.google.com/maps/place/35%C2%B036'31.6%22N+139%C2%B040'44.1%22E/@35.6087704,139.6438886,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6087765!4d139.6789083","m2":"https://www.google.com/maps/place/35%C2%B036'30.8%22N+139%C2%B040'45.9%22E/@35.6085624,139.6444036,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6085676!4d139.6794225","m3":"https://www.google.com/maps/place/35%C2%B036'29.1%22N+139%C2%B040'46.0%22E/@35.6080644,139.6444136,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6080696!4d139.6794333","m4":"https://www.google.com/maps/place/35%C2%B036'27.5%22N+139%C2%B040'46.1%22E/@35.6076314,139.6444426,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.607637!4d139.679462","m5":"https://www.google.com/maps/place/35%C2%B036'32.6%22N+139%C2%B040'41.5%22E/@35.6090484,139.6431756,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6090541!4d139.6781948","m6":"https://www.google.com/maps/place/35%C2%B036'29.1%22N+139%C2%B040'44.6%22E/@35.6080794,139.6440226,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6080845!4d139.6790421"}     
         building_pic={"w1":"https://www.dropbox.com/s/rtv2k8b8sa77gsn/w1.jpg?raw=1","w2":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","w3":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","w7":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","w4":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","w7":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","w8":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","w9":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1"}
-        web={"w1":"http://js.ila.titech.ac.jp/~web/japanese.html","w2":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w3":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w7":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w4":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w7":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w8":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w9":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html"}
+        web={"w1":"http://js.ila.titech.ac.jp/~web/japanese.html","w2":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w3":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w7":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w4":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w7":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w8":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","w9":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html","s1":"https://www.dropbox.com/s/ovo0h48cr5a8t9s/S1.jpg?raw=1","s2":"https://www.dropbox.com/s/oo6vh1jqs8ddsjy/S2.jpg?raw=1","s3":"https://www.dropbox.com/s/febfx46obyg2nzq/S3.jpg?raw=1","s4":"https://www.dropbox.com/s/hp59mv0kw4b9m0f/S4.jpg?raw=1","s5":"https://www.dropbox.com/s/5ma2v75blf1fv77/S5.jpg?raw=1","s6":"https://www.dropbox.com/s/0ajsq48mg7y8crm/S6.jpg?raw=1","s7":"https://www.dropbox.com/s/p1kpr4scoeahenc/S7.jpg?raw=1","s8":"https://www.dropbox.com/s/nuqsy6j5wk2fu2q/S8.jpg?raw=1","s9":"https://www.dropbox.com/s/td1bfzgtvidar1l/S9.jpg?raw=1","administration buraeu 1":"https://www.dropbox.com/s/nvdzun2bhcw2pe4/Administration%20buraeu%201.jpg?raw=1","administration buraeu 4":"https://www.dropbox.com/s/l13gdtmicx9jqnd/Administration%20buraeu%204.jpg?raw=1","gsic":"https://www.dropbox.com/s/yldh85w4jqvhlf9/Gsic.jpg?raw=1","e1":"https://www.dropbox.com/s/h3dg36v3xsf00td/E1.jpg?raw=1"}
         bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
@@ -590,29 +590,32 @@ def handle_sticker_message(event):
 @handler.add(MessageEvent, message=(ImageMessage, VideoMessage, AudioMessage))
 def handle_content_message(event):
     if isinstance(event.message, ImageMessage):
-        ext = 'jpg'
+        #ext = 'jpg'
+        pass
     elif isinstance(event.message, VideoMessage):
-        ext = 'mp4'
+        #ext = 'mp4'
+        pass
     elif isinstance(event.message, AudioMessage):
-        ext = 'm4a'
+        #ext = 'm4a'
+        pass
     else:
         return
 
-    message_content = line_bot_api.get_message_content(event.message.id)
-    with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
-        for chunk in message_content.iter_content():
-            tf.write(chunk)
-        tempfile_path = tf.name
+    #message_content = line_bot_api.get_message_content(event.message.id)
+    #with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
+        #for chunk in message_content.iter_content():
+            #tf.write(chunk)
+        #tempfile_path = tf.name
 
-    dist_path = tempfile_path + '.' + ext
-    dist_name = os.path.basename(dist_path)
-    os.rename(tempfile_path, dist_path)
+    #dist_path = tempfile_path + '.' + ext
+    #dist_name = os.path.basename(dist_path)
+    #os.rename(tempfile_path, dist_path)
 
-    line_bot_api.reply_message(
-        event.reply_token, [
-            TextSendMessage(text='Save content.'),
-            TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
-        ])
+    #line_bot_api.reply_message(
+        #event.reply_token, [
+            #TextSendMessage(text='Save content.'),
+            #TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
+        #])
 
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker_message(event):
