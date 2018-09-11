@@ -590,27 +590,27 @@ def handle_sticker_message(event):
 @handler.add(MessageEvent, message=(ImageMessage, VideoMessage, AudioMessage))
 def handle_content_message(event):
     if isinstance(event.message, ImageMessage):
-        #ext = 'jpg'
+        ext = 'jpg'
         pass
     elif isinstance(event.message, VideoMessage):
-        #ext = 'mp4'
+        ext = 'mp4'
         pass
     elif isinstance(event.message, AudioMessage):
-        #ext = 'm4a'
+        ext = 'm4a'
         pass
     else:
         return
 
-    #message_content = line_bot_api.get_message_content(event.message.id)
-    #with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
-        #for chunk in message_content.iter_content():
-            #tf.write(chunk)
-        #tempfile_path = tf.name
+    message_content = line_bot_api.get_message_content(event.message.id)
+    with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
+        for chunk in message_content.iter_content():
+            tf.write(chunk)
+        tempfile_path = tf.name
 
-    #dist_path = tempfile_path + '.' + ext
-    #dist_name = os.path.basename(dist_path)
-    #os.rename(tempfile_path, dist_path)
-
+    dist_path = tempfile_path + '.' + ext
+    dist_name = os.path.basename(dist_path)
+    os.rename(tempfile_path, dist_path)
+    pass
     #line_bot_api.reply_message(
         #event.reply_token, [
             #TextSendMessage(text='Save content.'),
