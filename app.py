@@ -591,13 +591,13 @@ def handle_sticker_message(event):
 def handle_content_message(event):
     if isinstance(event.message, ImageMessage):
         ext = 'jpg'
-        pass
+   
     elif isinstance(event.message, VideoMessage):
         ext = 'mp4'
-        pass
+        
     elif isinstance(event.message, AudioMessage):
         ext = 'm4a'
-        pass
+      
     else:
         return
 
@@ -610,12 +610,12 @@ def handle_content_message(event):
     dist_path = tempfile_path + '.' + ext
     dist_name = os.path.basename(dist_path)
     os.rename(tempfile_path, dist_path)
-    pass
-    #line_bot_api.reply_message(
-        #event.reply_token, [
-            #TextSendMessage(text='Save content.'),
-            #TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
-        #])
+   
+    line_bot_api.reply_message(
+        event.reply_token, [
+            TextSendMessage(text='Save content.'),
+            TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
+        ])
 
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker_message(event):
