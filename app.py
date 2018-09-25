@@ -171,7 +171,7 @@ def handle_text_message(event):
     elif text1 == 'instruction':
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(text='English version', title='Instruction', actions=[
-                URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/xjvc90mbxvfs41k/Instruction.pdf?raw=1'),
+                URIAction(label='Go to Instruction', uri='https://docs.google.com/presentation/d/1BS24qsVaKE6t6h3jTANEpKOydivOjvdmFFXnAHRJ3Ww/edit?usp=sharing'),
                 PostbackAction(label='Comment', data='comment')
             ]),
             CarouselColumn(text='Japanese version', title='Instruction', actions=[
