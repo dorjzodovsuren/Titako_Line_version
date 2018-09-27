@@ -146,23 +146,23 @@ def handle_text_message(event):
     elif text1 == 'bye':
         if isinstance(event.source, SourceGroup):
             line_bot_api.reply_message(
-                event.reply_token, TextSendMessage(text='Goodbye.I hope see you again ;D'))
+                event.reply_token, TextSendMessage(text='Leaving group'))
             line_bot_api.leave_group(event.source.group_id)
         elif isinstance(event.source, SourceRoom):
             line_bot_api.reply_message(
-                event.reply_token, TextSendMessage(text='Goodbye.I hope see you again ;D'))
+                event.reply_token, TextSendMessage(text='Leaving group'))
             line_bot_api.leave_room(event.source.room_id)
         else:
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="Goodbye. See you soon."))
+                TextSendMessage(text="Bot can't leave from 1:1 chat"))
                 
     elif text1 in ['hi','hello','sainu','launch']:
         buttons_template = ButtonsTemplate(
             title='Services', text='Hello. I am TiTAX LINE assistant.Please choose your service', actions=[
                 URIAction(label='Go to TokyoTech Web', uri='https://www.titech.ac.jp/english/'),
-                PostbackAction(label='Search room', data='ping', text='Please enter room number(ex:H111):'),
-                PostbackAction(label='Search building', data='ping', text='Please enter bulding number(ex: w1 ,s3 or library):'),
+                PostbackAction(label='Search room', data='ping', text='Please enter room number:'),
+                PostbackAction(label='Search building', data='ping', text='Please enter bulding number'),
                 MessageAction(label='Report Problem', text='Please describe problems:')
             ])
         template_message = TemplateSendMessage(
@@ -171,16 +171,16 @@ def handle_text_message(event):
     elif text1 == 'instruction':
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(text='English version', title='Instruction', actions=[
-                URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/xjvc90mbxvfs41k/Instruction.pdf?raw=1'),
-                PostbackAction(label='Comment', data='comment_eng')
+                URIAction(label='Go to Instruction', uri='https://docs.google.com/presentation/d/1BS24qsVaKE6t6h3jTANEpKOydivOjvdmFFXnAHRJ3Ww/edit?usp=sharing'),
+                PostbackAction(label='Comment', data='comment')
             ]),
             CarouselColumn(text='Japanese version', title='Instruction', actions=[
                 URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/xjvc90mbxvfs41k/Instruction.pdf?raw=1'),
-                PostbackAction(label='Comento', data='comment_jap')
+                PostbackAction(label='Comento', data='comment')
             ]),
             CarouselColumn(text='Mongolian version', title='Instruction', actions=[
                 URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/xjvc90mbxvfs41k/Instruction.pdf?raw=1'),
-                PostbackAction(label='Setgegdel', data='comment_mon')
+                PostbackAction(label='Setgegdel', data='comment')
             ]),
         ])
         template_message = TemplateSendMessage(
@@ -255,7 +255,7 @@ def handle_text_message(event):
                                         flex=1
                                     ),
                                     TextComponent(
-                                        text="    ",
+                                        text="07:00 - 20:00",
                                         wrap=True,
                                         color='#666666',
                                         size='sm',
@@ -293,8 +293,7 @@ def handle_text_message(event):
             event.reply_token,
             message
         )
-    
-    elif text1 in ["w1","w2","w3","w4","w5","w6","w7","w8e","w8w","w9","cafeteria 1","cafeteria 2","west lecture 1","west lecture 2","e1","e2","e8","s1","s2","s3","s4","s5","s6","s7","s8","s9","south lab 1","south lab 2","south lab 3","south lab 4","south lab 5","i1","i2","i3","i4","i5","i6","i7","i8","i9","elsi 1","elsi 2","n1","n2","n3","north lab 1","north lab 2a","north lab 2b","north lab 3a","north lab 3b","north lab 4","north lab 5","north lab 6","north lab 7","north lab 8","m1","m2","m3","m4","m5","m6","sports center","envi safety management"]:
+    elif text1 in ["w1","w2","w3","w4","w5","w6","w7","w8e","w8w","w9","cafeteria 1","cafeteria 2","west lecture 1","west lecture 2","e1","e2","e8","s1","s2","s3","s4","s5","s6","s7","s8","s9","south lab 1","south lab 2","south lab 3","south lab 4","south lab 5","i1","i2","i3","i4","i5","i6","i7","i8","i9","elsi 1","elsi 2","n1","n2","n3","north lab 1","north lab 2a","north lab 2b","north lab 3a","north lab 3b","north lab 4","north lab 5","north lab 6","north lab 7","north lab 8","m1","m2","m3","m4","m5","m6"]:
 
         tatemono={"w1":"https://www.google.com/maps/place/35%C2%B036'19.4%22N+139%C2%B040'58.4%22E/@35.6053704,139.6478786,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6053761!4d139.6828977",
 "w2":"https://www.google.com/maps/place/35%C2%B036'16.7%22N+139%C2%B040'57.3%22E/@35.6046301,139.6820325,19z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6046289!4d139.6825812",
@@ -356,9 +355,7 @@ def handle_text_message(event):
 "m3":"https://www.google.com/maps/place/35%C2%B036'29.1%22N+139%C2%B040'46.0%22E/@35.6080644,139.6444136,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6080696!4d139.6794333",
 "m4":"https://www.google.com/maps/place/35%C2%B036'27.5%22N+139%C2%B040'46.1%22E/@35.6076314,139.6444426,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.607637!4d139.679462",
 "m5":"https://www.google.com/maps/place/35%C2%B036'32.6%22N+139%C2%B040'41.5%22E/@35.6090484,139.6431756,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6090541!4d139.6781948",
-"m6":"https://www.google.com/maps/place/35%C2%B036'29.1%22N+139%C2%B040'44.6%22E/@35.6080794,139.6440226,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6080845!4d139.6790421",
-"sports center":"https://www.google.com/maps/place/35%C2%B036'19.6%22N+139%C2%B040'56.3%22E/@35.6054424,139.6472916,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6054482!4d139.6823113",
-"envi safety management":"https://www.google.com/maps/place/35%C2%B036'21.6%22N+139%C2%B040'54.6%22E/@35.6059814,139.6468176,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6059866!4d139.681837"}     
+"m6":"https://www.google.com/maps/place/35%C2%B036'29.1%22N+139%C2%B040'44.6%22E/@35.6080794,139.6440226,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6080845!4d139.6790421" }     
         building_pic={"w1":"https://www.dropbox.com/s/rtv2k8b8sa77gsn/w1.jpg?raw=1",
 "w2":"https://www.dropbox.com/s/v2kkuf59rze1vgm/W2%263.jpg?raw=1",
 "w3":"https://www.dropbox.com/s/v2kkuf59rze1vgm/W2%263.jpg?raw=1",
@@ -419,9 +416,7 @@ def handle_text_message(event):
 "m3":"https://www.dropbox.com/s/8un108x33jz5pob/M3.jpg?raw=1",
 "m4":"https://www.dropbox.com/s/6m5o41deubgjd9r/M4.jpg?raw=1",
 "m5":"https://www.dropbox.com/s/sxtblhxpt62owd8/M5.jpg?raw=1",
-"m6":"https://www.dropbox.com/s/bz7hr0fw09c2lng/M6.jpg?raw=1",
-"sports center":"https://www.dropbox.com/s/0o3d513711z9nmb/sport%20hall.jpg?raw=1",
-"envi safety management":"https://www.dropbox.com/s/oksvyk1f72bu3g8/Environmental%20safety%20management.jpg?raw=1"}
+"m6":"https://www.dropbox.com/s/bz7hr0fw09c2lng/M6.jpg?raw=1"}
         web={"w1":"http://js.ila.titech.ac.jp/~web/japanese.html",
 "w2":"https://www.titech.ac.jp/english/maps/ookayama/",
 "w3":"https://www.titech.ac.jp/english/maps/ookayama/",
@@ -482,9 +477,7 @@ def handle_text_message(event):
 "m3":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
 "m4":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
 "m5":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
-"m6":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
-"sports center":"https://www.titech.ac.jp/english/enrolled/facilities/sports.html",
-"envi safety management":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html"}
+"m6":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html"}
         bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
@@ -534,7 +527,7 @@ def handle_text_message(event):
                                         flex=1
                                     ),
                                     TextComponent(
-                                        text="   ",
+                                        text="----",
                                         wrap=True,
                                         color='#666666',
                                         size='sm',
@@ -601,9 +594,7 @@ def handle_text_message(event):
                             action=LocationAction(label="label6")
                         ),
                     ])))
-        
-                    
-    elif zassan in ["administration bureau 1","administration bureau 2","administration bureau 3","administration bureau 4","administration bureau 5","gsic","global scientific information and computing center","library","main","centennial hall","lecture hall","lecture theater","70th anniversary auditorium","gymnasium","health service center","80th anniversary hall","tokyo tech front","environmental energy innovation","south lecture","ishikawadai lab 1","international house","midorigaoka lecture"]:
+    elif zassan in ["administration bureau 1","administration bureau 2","administration bureau 3","administration bureau 4","administration bureau 5","gsic","global scientific information and computing center","library","main","centennial hall","lecturehall","lecture theater","safety management","70th anniversary auditorium","sports center","gymnasium","health service center","80th anniversary hall","tokyo tech front","environmental energy innovation","south lecture","ishikawadai lab 1","international house","midorigaoka lecture"]:
          building={"administration bureau 1":"https://www.google.com/maps/place/35%C2%B036'18.7%22N+139%C2%B041'03.9%22E/@35.6052005,139.6494834,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6052063!4d139.6844169",
 "administration bureau 2":"https://www.google.com/maps/place/35%C2%B036'18.7%22N+139%C2%B041'03.9%22E/@35.6052005,139.6494834,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6052063!4d139.6844169",
 "administration bureau 3":"https://www.google.com/maps/place/35%C2%B036'18.3%22N+139%C2%B041'05.7%22E/@35.6050655,139.6499744,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6050714!4d139.6849082",
@@ -616,8 +607,9 @@ def handle_text_message(event):
 "centennial hall":"https://www.google.com/maps/place/35%C2%B036'24.9%22N+139%C2%B041'05.6%22E/@35.6069085,139.6499504,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6069141!4d139.684884",
 "lecturehall":"https://www.google.ru/maps/place/35%C2%B036'16.0%22N+139%C2%B041'01.9%22E/@35.60443,139.6833168,19z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6044304!4d139.6838642",
 "lecture theater":"https://www.google.com/maps/place/35%C2%B036'16.3%22N+139%C2%B040'56.3%22E/@35.6045284,139.6472956,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6045342!4d139.6823149",
-#"management":"https://www.google.com/maps/place/35%C2%B036'21.6%22N+139%C2%B040'54.6%22E/@35.6059814,139.6468176,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6059866!4d139.681837",
+"safety management":"https://www.google.com/maps/place/35%C2%B036'21.6%22N+139%C2%B040'54.6%22E/@35.6059814,139.6468176,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6059866!4d139.681837",
 "70th anniversary auditorium":"https://www.google.com/maps/place/35%C2%B036'21.3%22N+139%C2%B041'00.8%22E/@35.6059164,139.6485256,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6059219!4d139.6835447",
+"sports center":"https://www.google.com/maps/place/35%C2%B036'19.6%22N+139%C2%B040'56.3%22E/@35.6054424,139.6472916,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6054482!4d139.6823113",
 "gymnasium":"https://www.google.com/maps/place/35%C2%B036'19.6%22N+139%C2%B040'56.3%22E/@35.6054424,139.6472916,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6054482!4d139.6823113",
 "health service center":"https://www.google.com/maps/place/35%C2%B036'26.1%22N+139%C2%B041'01.3%22E/@35.6072424,139.6486846,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6072477!4d139.6837039",
 "80th anniversary hall":"https://www.google.com/maps/place/35%C2%B036'25.5%22N+139%C2%B041'00.0%22E/@35.6070714,139.6483236,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6070767!4d139.6833428",
@@ -626,6 +618,7 @@ def handle_text_message(event):
 "south lecture":"https://www.google.com/maps/place/35%C2%B036'08.9%22N+139%C2%B041'03.0%22E/@35.6024515,139.6492394,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6024568!4d139.6841734",
 "ishikawadai lab 1":"https://www.google.com/maps/place/35%C2%B036'06.1%22N+139%C2%B041'03.3%22E/@35.6016814,139.6492336,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6016865!4d139.684253",
 "international house":"https://www.google.com/maps/place/35%C2%B036'01.0%22N+139%C2%B041'03.5%22E/@35.6002734,139.6492956,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6002789!4d139.684315",
+
 "library":"https://www.google.com/maps/place/35%C2%B036'23.0%22N+139%C2%B041'02.5%22E/@35.6063824,139.6490934,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6063883!4d139.6840266",
 "midorigaoka lecture":"https://www.google.com/maps/place/35%C2%B036'28.5%22N+139%C2%B040'45.7%22E/@35.6079114,139.6443346,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6079171!4d139.6793542"}
          building_pic={"administration bureau 1":"https://www.dropbox.com/s/nvdzun2bhcw2pe4/Administration%20buraeu%201.jpg?raw=1",
@@ -641,7 +634,9 @@ def handle_text_message(event):
 "lecturehall":"https://www.dropbox.com/s/ihn336paj1hgq1i/logo.jpg?raw=1",
 #WEST
 "lecture theater":"https://www.dropbox.com/s/6pjc3kpx7vt5ps3/West%20lecture%201.jpg?raw=1",
+"safety management":"https://www.dropbox.com/s/oksvyk1f72bu3g8/Environmental%20safety%20management.jpg?raw=1",
 "70th anniversary auditorium":"https://www.dropbox.com/s/njdrmcugxqeqoux/70th%20anniversary%20Auditorium.jpg?raw=1",
+"sports center":"https://www.dropbox.com/s/0o3d513711z9nmb/sport%20hall.jpg?raw=1",
 "gymnasium":"https://www.dropbox.com/s/0o3d513711z9nmb/sport%20hall.jpg?raw=1",
 #NORTH
 "health service center":"https://www.dropbox.com/s/dm720e5f02ha85v/Health%20service%20center.jpg?raw=1",
@@ -668,7 +663,9 @@ def handle_text_message(event):
 "lecturehall":"https://www.titech.ac.jp/english/enrolled/facilities/rooms/",
 #WEST
 "lecture theater":"https://www.titech.ac.jp/english/news/2015/031639.html",
+"safety management":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
 "70th anniversary auditorium":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
+"sports center":"https://www.titech.ac.jp/english/enrolled/facilities/sports.html",
 "gymnasium":"https://www.titech.ac.jp/english/enrolled/facilities/sports.html",
 #NORTH
 "health service center":"https://www.titech.ac.jp/english/about/organization/institute_wide_support_centers/organization01.html",
@@ -731,7 +728,7 @@ def handle_text_message(event):
                                         flex=1
                                     ),
                                     TextComponent(
-                                        text="   ",
+                                        text="07:00 - 20:00",
                                         wrap=True,
                                         color='#666666',
                                         size='sm',
@@ -772,8 +769,7 @@ def handle_text_message(event):
             message
         )
     else:
-        dialogue.append(text1)
-        print dialogue
+        pass
         
 
 
@@ -834,6 +830,21 @@ def handle_sticker_message(event):
 @handler.add(MessageEvent, message=FileMessage)
 def handle_file_message(event):
     pass
+  #   message_content = line_bot_api.get_message_content(event.message.id)
+#     with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix='file-', delete=False) as tf:
+#         for chunk in message_content.iter_content():
+#             tf.write(chunk)
+#         tempfile_path = tf.name
+# 
+#     dist_path = tempfile_path + '-' + event.message.file_name
+#     dist_name = os.path.basename(dist_path)
+#     os.rename(tempfile_path, dist_path)
+# 
+#     line_bot_api.reply_message(
+#         event.reply_token, [
+#             TextSendMessage(text='Save file.'),
+#             TextSendMessage(text=request.host_url + os.path.join('static', 'tmp', dist_name))
+#         ])
 
 
 @handler.add(FollowEvent)
@@ -861,18 +872,12 @@ def handle_leave():
 
 @handler.add(PostbackEvent)
 def handle_postback(event):
-    if event.postback.data == 'comment_eng':
-        line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage('Please write your comment'))
-    elif event.postback.data == 'comment_jap':
-        line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage('Anata no komento o kaite kudasai'))
-    elif event.postback.data == 'comment_mon':
-        line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage('Ooriinhoo setgegdeliig vldeene vv'))
+    if event.postback.data == 'ping':
+        pass
+    elif event.postback.data == 'datetime_postback':
+        pass
+    elif event.postback.data == 'date_postback':
+        pass
 
 @handler.add(BeaconEvent)
 def handle_beacon(event):
