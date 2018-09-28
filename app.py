@@ -155,7 +155,7 @@ def handle_text_message(event):
         else:
             line_bot_api.reply_message(
                 event.reply_token,
-                TextSendMessage(text="Bot can't leave from 1:1 chat"))
+                TextSendMessage(text="Goodbye.See you soon"))
                 
     elif text1 in ['hi','hello','sainu','launch']:
         buttons_template = ButtonsTemplate(
@@ -850,7 +850,7 @@ def handle_file_message(event):
 @handler.add(FollowEvent)
 def handle_follow(event):
     line_bot_api.reply_message(
-        event.reply_token, TextSendMessage(text='Got follow event'))
+        event.reply_token, TextSendMessage(text='It is nice to be friend with you.I am TiTaX assistant of Tokyo Tech Ookayama campus.'))
 
 
 @handler.add(UnfollowEvent)
