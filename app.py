@@ -171,11 +171,11 @@ def handle_text_message(event):
     elif text1 == 'instruction':
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(text='English version', title='Instruction', actions=[
-                URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/rn9femnnywl5xwt/Instruction%20TiTaX.pdf?raw=1'),
+                URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/omrktidbj3x33hg/Instruction%20TiTaX.pdf?raw=1'),
                 PostbackAction(label='Comment', data='comment')
             ]),
             CarouselColumn(text='Japanese version', title='Instruction', actions=[
-                URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/rn9femnnywl5xwt/Instruction%20TiTaX.pdf?raw=1'),
+                URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/omrktidbj3x33hg/Instruction%20TiTaX.pdf?raw=1'),
                 PostbackAction(label='Comento', data='comment')
             ]),
             CarouselColumn(text='Mongolian version', title='Instruction', actions=[
