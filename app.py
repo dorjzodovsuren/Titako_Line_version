@@ -849,8 +849,95 @@ def handle_file_message(event):
 
 @handler.add(FollowEvent)
 def handle_follow(event):
-    line_bot_api.reply_message(
-        event.reply_token, TextSendMessage(text='It is nice to be friend with you.I am TiTaX assistant of Tokyo Tech Ookayama campus.'))
+    bubble = BubbleContainer(
+            direction='ltr',
+            hero=ImageComponent(
+                url="https://www.dropbox.com/s/jcpvyc1bhp3r8u7/2F352FF8-7E82-4A14-B081-DA8484B092F8.jpeg?raw=1",
+                size='full',
+                aspect_ratio='20:13',
+                aspect_mode='cover',
+                action=URIAction(uri="https://www.dropbox.com/s/5s7t2p4bibkkv6t/TiTaX%20brief%20user%20guide.mp4?raw=1", label='label') 
+            ),
+            body=BoxComponent(
+                layout='vertical',
+                contents=[
+                    # title
+                    TextComponent(text='A brief user guide video', weight='bold', size='xl'),
+                    BoxComponent(
+                        layout='vertical',
+                        margin='lg',
+                        spacing='sm',
+                        contents=[
+                            BoxComponent(
+                                layout='baseline',
+                                spacing='sm',
+                                contents=[
+                                    TextComponent(
+                                        text='Content',
+                                        color='#aaaaaa',
+                                        size='sm',
+                                        flex=1
+                                    ),
+                                    TextComponent(
+                                        text='Guidance',
+                                        wrap=True,
+                                        color='#666666',
+                                        size='sm',
+                                        flex=5
+                                    )
+                                ],
+                            ),
+                            BoxComponent(
+                                layout='baseline',
+                                spacing='sm',
+                                contents=[
+                                    TextComponent(
+                                        text='Duration(min)',
+                                        color='#aaaaaa',
+                                        size='sm',
+                                        flex=1
+                                    ),
+                                    TextComponent(
+                                        text="03:22min",
+                                        wrap=True,
+                                        color='#666666',
+                                        size='sm',
+                                        flex=5,
+                                    ),
+                                ],
+                            ),
+                        ],
+                    )
+                ],
+            ),
+            footer=BoxComponent(
+                layout='vertical',
+                spacing='sm',
+                contents=[
+                    # callAction, separator, websiteAction
+                    SpacerComponent(size='sm'),
+                    # callAction
+                    ButtonComponent(
+                        style='link',
+                        height='sm',
+                        action=URIAction(label='Go to watch video', uri="https://www.dropbox.com/s/5s7t2p4bibkkv6t/TiTaX%20brief%20user%20guide.mp4?raw=1"),
+                    ),
+                    # separator
+                    SeparatorComponent(),
+                    # websiteAction
+                    ButtonComponent(
+                        style='link',
+                        height='sm',
+                        action=URIAction(label='Click to share', uri="https://www.dropbox.com/s/urhqywhgfyk1829/Share%20QR.png?raw=1") 
+                    )
+                ]
+            ),
+        )
+   message = FlexSendMessage(alt_text="User guidance Video", contents=bubble)
+   line_bot_api.reply_message(
+            event.reply_token,
+            message
+        )
 
 
 @handler.add(UnfollowEvent)
