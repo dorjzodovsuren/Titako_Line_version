@@ -856,7 +856,7 @@ def handle_follow(event):
                 size='full',
                 aspect_ratio='20:13',
                 aspect_mode='cover',
-                action=URIAction(uri="https://www.dropbox.com/s/5s7t2p4bibkkv6t/TiTaX%20brief%20user%20guide.mp4?raw=1", label='label') 
+                action=URIAction(uri="https://www.dropbox.com/s/xf7dcbpp1n72ukj/TiTaX%20user%20guide%20video.mp4?raw=1", label='label') 
             ),
             body=BoxComponent(
                 layout='vertical',
@@ -898,7 +898,7 @@ def handle_follow(event):
                                         flex=1
                                     ),
                                     TextComponent(
-                                        text="03:22min",
+                                        text="03:48min",
                                         wrap=True,
                                         color='#666666',
                                         size='sm',
@@ -920,7 +920,7 @@ def handle_follow(event):
                     ButtonComponent(
                         style='link',
                         height='sm',
-                        action=URIAction(label='Go to watch video', uri="https://www.dropbox.com/s/5s7t2p4bibkkv6t/TiTaX%20brief%20user%20guide.mp4?raw=1"),
+                        action=URIAction(label='Go to watch video', uri="https://www.dropbox.com/s/xf7dcbpp1n72ukj/TiTaX%20user%20guide%20video.mp4?raw=1"),
                     ),
                     # separator
                     SeparatorComponent(),
