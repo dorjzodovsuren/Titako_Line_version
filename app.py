@@ -162,8 +162,8 @@ def handle_text_message(event):
             title='Services', text='Hello. I am TiTAX LINE assistant.Please choose your service', actions=[
                 URIAction(label='Go to TokyoTech Web', uri='https://www.titech.ac.jp/english/'),
                 PostbackAction(label='Search room', data='ping', text='Please enter room number:'),
-                PostbackAction(label='Search building', data='ping', text='Please enter bulding number'),
-                MessageAction(label='Report Problem', text='Please describe problems:')
+                PostbackAction(label='Search building', data='ping', text='Please enter the building name(TiTaX format)'),
+                MessageAction(label='Reporting Bugs', text='Please describe problems:')
             ])
         template_message = TemplateSendMessage(
             alt_text='TiTAX is greeting', template=buttons_template)
@@ -178,8 +178,8 @@ def handle_text_message(event):
                 URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/omrktidbj3x33hg/Instruction%20TiTaX.pdf?raw=1'),
                 PostbackAction(label='Comento', data='comment')
             ]),
-            CarouselColumn(text='Mongolian version', title='Instruction', actions=[
-                URIAction(label='Go to Instruction', uri='https://www.dropbox.com/s/xjvc90mbxvfs41k/Instruction.pdf?raw=1'),
+            CarouselColumn(text='Mongol huwilbar', title='Zaawar', actions=[
+                URIAction(label='Zaawarchilgaag vzeh', uri='https://www.dropbox.com/s/xjvc90mbxvfs41k/Instruction.pdf?raw=1'),
                 PostbackAction(label='Setgegdel', data='comment')
             ]),
         ])
@@ -255,7 +255,7 @@ def handle_text_message(event):
                                         flex=1
                                     ),
                                     TextComponent(
-                                        text="07:00 - 20:00",
+                                        text="07:00 - 21:00",
                                         wrap=True,
                                         color='#666666',
                                         size='sm',
@@ -275,7 +275,7 @@ def handle_text_message(event):
                     ButtonComponent(
                         style='link',
                         height='sm',
-                        action=URIAction(label='CALL', uri='tel:08088923385'),
+                        action=URIAction(label='CALL', uri='tel:0000000000'),
                     ),
                     # separator
                     SeparatorComponent(),
@@ -355,7 +355,11 @@ def handle_text_message(event):
 "m3":"https://www.google.com/maps/place/35%C2%B036'29.1%22N+139%C2%B040'46.0%22E/@35.6080644,139.6444136,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6080696!4d139.6794333",
 "m4":"https://www.google.com/maps/place/35%C2%B036'27.5%22N+139%C2%B040'46.1%22E/@35.6076314,139.6444426,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.607637!4d139.679462",
 "m5":"https://www.google.com/maps/place/35%C2%B036'32.6%22N+139%C2%B040'41.5%22E/@35.6090484,139.6431756,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6090541!4d139.6781948",
-"m6":"https://www.google.com/maps/place/35%C2%B036'29.1%22N+139%C2%B040'44.6%22E/@35.6080794,139.6440226,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6080845!4d139.6790421" }     
+"m6":"https://www.google.com/maps/place/35%C2%B036'29.1%22N+139%C2%B040'44.6%22E/@35.6080794,139.6440226,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6080845!4d139.6790421",
+"sports center":"https://www.google.com/maps/place/35%C2%B036'19.6%22N+139%C2%B040'56.3%22E/@35.6054424,139.6472916,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6054482!4d139.6823113",
+"envi safety management":"https://www.google.com/maps/place/35%C2%B036'21.6%22N+139%C2%B040'54.6%22E/@35.6059814,139.6468176,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6059866!4d139.681837",
+"lecture halls":"https://www.google.ru/maps/place/35%C2%B036'16.0%22N+139%C2%B041'01.9%22E/@35.60443,139.6833168,19z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6044304!4d139.6838642",
+"70th auditorium":"https://www.google.com/maps/place/35%C2%B036'21.3%22N+139%C2%B041'00.8%22E/@35.6059164,139.6485256,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6059219!4d139.6835447"}     
         building_pic={"w1":"https://www.dropbox.com/s/rtv2k8b8sa77gsn/w1.jpg?raw=1",
 "w2":"https://www.dropbox.com/s/v2kkuf59rze1vgm/W2%263.jpg?raw=1",
 "w3":"https://www.dropbox.com/s/v2kkuf59rze1vgm/W2%263.jpg?raw=1",
@@ -416,7 +420,11 @@ def handle_text_message(event):
 "m3":"https://www.dropbox.com/s/8un108x33jz5pob/M3.jpg?raw=1",
 "m4":"https://www.dropbox.com/s/6m5o41deubgjd9r/M4.jpg?raw=1",
 "m5":"https://www.dropbox.com/s/sxtblhxpt62owd8/M5.jpg?raw=1",
-"m6":"https://www.dropbox.com/s/bz7hr0fw09c2lng/M6.jpg?raw=1"}
+"m6":"https://www.dropbox.com/s/bz7hr0fw09c2lng/M6.jpg?raw=1",
+"sports center":"https://www.dropbox.com/s/0o3d513711z9nmb/sport%20hall.jpg?raw=1",
+"envi safety management":"https://www.dropbox.com/s/oksvyk1f72bu3g8/Environmental%20safety%20management.jpg?raw=1",
+"lecture halls":"https://www.dropbox.com/s/ihn336paj1hgq1i/logo.jpg?raw=1",
+"70th auditorium":"https://www.dropbox.com/s/njdrmcugxqeqoux/70th%20anniversary%20Auditorium.jpg?raw=1"}
         web={"w1":"http://js.ila.titech.ac.jp/~web/japanese.html",
 "w2":"https://www.titech.ac.jp/english/maps/ookayama/",
 "w3":"https://www.titech.ac.jp/english/maps/ookayama/",
@@ -477,7 +485,11 @@ def handle_text_message(event):
 "m3":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
 "m4":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
 "m5":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
-"m6":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html"}
+"m6":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
+"sports center":"https://www.titech.ac.jp/english/enrolled/facilities/sports.html",
+"envi safety management":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
+"lecture hall":"https://www.titech.ac.jp/english/enrolled/facilities/rooms/",
+"70th auditorium":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html"}
         bubble = BubbleContainer(
             direction='ltr',
             hero=ImageComponent(
@@ -728,7 +740,7 @@ def handle_text_message(event):
                                         flex=1
                                     ),
                                     TextComponent(
-                                        text="07:00 - 20:00",
+                                        text="----",
                                         wrap=True,
                                         color='#666666',
                                         size='sm',
