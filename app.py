@@ -293,7 +293,7 @@ def handle_text_message(event):
             event.reply_token,
             message
         )
-    elif text1 in ["w1","w2","w3","w4","w5","w6","w7","w8e","w8w","w9","cafeteria 1","cafeteria 2","west lecture 1","west lecture 2","e1","e2","e8","s1","s2","s3","s4","s5","s6","s7","s8","s9","south lab 1","south lab 2","south lab 3","south lab 4","south lab 5","i1","i2","i3","i4","i5","i6","i7","i8","i9","elsi 1","elsi 2","n1","n2","n3","north lab 1","north lab 2a","north lab 2b","north lab 3a","north lab 3b","north lab 4","north lab 5","north lab 6","north lab 7","north lab 8","m1","m2","m3","m4","m5","m6"]:
+    elif text1 in ["w1","w2","w3","w4","w5","w6","w7","w8e","w8w","w9","cafeteria 1","cafeteria 2","west lecture 1","west lecture 2","e1","e2","e8","s1","s2","s3","s4","s5","s6","s7","s8","s9","south lab 1","south lab 2","south lab 3","south lab 4","south lab 5","i1","i2","i3","i4","i5","i6","i7","i8","i9","elsi 1","elsi 2","n1","n2","n3","north lab 1","north lab 2a","north lab 2b","north lab 3a","north lab 3b","north lab 4","north lab 5","north lab 6","north lab 7","north lab 8","m1","m2","m3","m4","m5","m6","sports center","lecture halls","envi safety management","70th auditorium"]:
 
         tatemono={"w1":"https://www.google.com/maps/place/35%C2%B036'19.4%22N+139%C2%B040'58.4%22E/@35.6053704,139.6478786,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6053761!4d139.6828977",
 "w2":"https://www.google.com/maps/place/35%C2%B036'16.7%22N+139%C2%B040'57.3%22E/@35.6046301,139.6820325,19z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6046289!4d139.6825812",
@@ -606,7 +606,7 @@ def handle_text_message(event):
                             action=LocationAction(label="label6")
                         ),
                     ])))
-    elif zassan in ["administration bureau 1","administration bureau 2","administration bureau 3","administration bureau 4","administration bureau 5","gsic","global scientific information and computing center","library","main","centennial hall","lecturehall","lecture theater","safety management","70th anniversary auditorium","sports center","gymnasium","health service center","80th anniversary hall","tokyo tech front","environmental energy innovation","south lecture","ishikawadai lab 1","international house","midorigaoka lecture"]:
+    elif zassan in ["administration bureau 1","administration bureau 2","administration bureau 3","administration bureau 4","administration bureau 5","gsic","global scientific information and computing center","library","main","centennial hall","lecture theater","gymnasium","health service center","80th anniversary hall","tokyo tech front","environmental energy innovation","south lecture","ishikawadai lab 1","international house","midorigaoka lecture"]:
          building={"administration bureau 1":"https://www.google.com/maps/place/35%C2%B036'18.7%22N+139%C2%B041'03.9%22E/@35.6052005,139.6494834,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6052063!4d139.6844169",
 "administration bureau 2":"https://www.google.com/maps/place/35%C2%B036'18.7%22N+139%C2%B041'03.9%22E/@35.6052005,139.6494834,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6052063!4d139.6844169",
 "administration bureau 3":"https://www.google.com/maps/place/35%C2%B036'18.3%22N+139%C2%B041'05.7%22E/@35.6050655,139.6499744,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6050714!4d139.6849082",
