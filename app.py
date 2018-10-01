@@ -203,7 +203,7 @@ def handle_text_message(event):
         line_bot_api.reply_message(event.reply_token, template_message)
     elif text1 == 'imagemap':
         pass
-    elif text1 in ["h121","h111","h112","h113","h114","h115","h116","h118","z14","z16","71-2"]:
+    elif text1 in ["h121","h111","h112","h113","h114","h115","h116","h118"]:
         zurag={"h121":"https://www.dropbox.com/s/lc94cqfzttgx7mv/h121.jpg?raw=1","h111":"https://www.dropbox.com/s/rn9sn5ylimphdir/h111.jpg?raw=1","hoh":"https://www.dropbox.com/s/hpxkwcq9ej6sskz/hoh.jpg?raw=1","h112":"https://www.dropbox.com/s/29xlk7clggixhfz/h112.jpg?raw=1","h113":"https://www.dropbox.com/s/nsxcdaycm0b2lyi/h113.jpg?raw=1","h114":"https://www.dropbox.com/s/718s7wtk4uopjni/h114.jpg?raw=1","h115":"https://www.dropbox.com/s/und4scgb7ae69l5/h115.jpg?raw=1","h116":"https://www.dropbox.com/s/lcvum4xr5p3o7l0/h116.jpg?raw=1","h118":"https://www.dropbox.com/s/vq2oqeglcb5t161/h118.jpg?raw=1"}
         building_pic={"h121":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h111":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h112":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h113":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h114":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h115":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h116":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h118":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1"}
         bubble = BubbleContainer(
