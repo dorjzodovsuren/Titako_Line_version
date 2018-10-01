@@ -488,7 +488,7 @@ def handle_text_message(event):
 "m6":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
 "sports center":"https://www.titech.ac.jp/english/enrolled/facilities/sports.html",
 "envi safety management":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html",
-"lecture hall":"https://www.titech.ac.jp/english/enrolled/facilities/rooms/",
+"lecture halls":"https://www.titech.ac.jp/english/enrolled/facilities/rooms/",
 "70th auditorium":"https://www.titech.ac.jp/english/maps/ookayama/ookayama.html"}
         bubble = BubbleContainer(
             direction='ltr',
