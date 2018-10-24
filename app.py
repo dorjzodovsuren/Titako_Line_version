@@ -4,11 +4,6 @@ import errno
 import os
 import sys
 import tempfile
-from datetime import datetime
-import time
-from apscheduler.schedulers.background import BackgroundScheduler
-import gspread 
-from oauth2client.service_account import ServiceAccountCredentials
 from argparse import ArgumentParser
 
 from flask import Flask, request, abort
@@ -55,27 +50,6 @@ global dialogue
 global story
 global q
 global b
-global events
-
-class Event:
-  def __init__(self, year , month, day, hour, minute):
-    self.year = year
-    self.month = month
-    self.day = day
-    self.hour = hour
-    self.minute = minute		
-
-scope=['https://spreadsheets.google.com/feeds','https://www.googleapis.com/auth/drive']
- 
-credentials = ServiceAccountCredentials.from_json_keyfile_name('spreadsheet-209ebae45007.json', scope)
- 
-gs = gspread.authorize(credentials)
-scheduler = BackgroundScheduler()
-def Convert(string): 
-    li = list(string.split(" ")) 
-    return li
-wks=gs.open('Event Registration').sheet1
-input="Dorj"
 dialogue = []
 story = []
 timeline = 0
@@ -125,46 +99,7 @@ def make_static_tmp_dir():
             pass
         else:
             raise
-def tick(text=None):
- try:
- 	if (text==None):
-	    line_bot_api.push_message('R6fde38214a90b44cadbb8aa20241dc70', TextSendMessage(text='Thank you for using our service. we try our best to provide the simple and fast service for saving your prestigious time. Today we have some interesting event at Tokyo tech .Please do not forget to visit Mongolian tent to taste such a rare flavours.We hope see you tomorrow.\nhttps://line.me/R/ti/p/%40ran6652m'))
-	else:
-		line_bot_api.push_message('R6fde38214a90b44cadbb8aa20241dc70', TextSendMessage(text='Test success'))
- except LineBotApiError as e:
-    print("Got exception from LINE Messaging API: %s\n" % e.message)
 
-def code():
- tooloh=[]
- while len(tooloh)<6:
-    element = ["0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f","g","h","i","j","k","l","m","n","@","!","#","$","&","*"]
-    index_id = random.randint(0, len(element) - 1)
-    sub = str(element[index_id])
-    tooloh.append(sub)
- Tcode = [''.join(tooloh[0:6])]
- return Tcode[0]
- 
-def refresh():
- 
- list_of_cell=wks.findall(str(input))
- number_of_element=len(list_of_cell)
- row=[]
- for i in range(number_of_element):
-  row.append(list_of_cell[i].row)
-#List of all events
-
- events=[]
- for i in range(number_of_element):
-  location=str('E'+str(row[i]))
-  str1=str((wks.acell(location).value)) 
-  year=int((str1[6]+str1[7]+str1[8]+str1[9]))
-  month=int((str1[3]+str1[4]))
-  day=int((str1[0]+str1[1]))
-  hour=int(str1[11]+str1[12])
-  minute=int(str1[14]+str1[15])
-  events.append(Event(year, month, day, hour, minute))
-  for e in events:
-	scheduler.add_job(tick, 'date', run_date=datetime(e.year, e.month, e.day, e.hour, e.minute), args=[])
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -187,7 +122,6 @@ def callback():
         abort(400)
 
     return 'OK'
-
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -216,7 +150,7 @@ def handle_text_message(event):
             line_bot_api.leave_group(event.source.group_id)
         elif isinstance(event.source, SourceRoom):
             line_bot_api.reply_message(
-                event.reply_token, TextSendMessage(text='Leaving %s'%event.source.room_id))
+                event.reply_token, TextSendMessage(text='Leaving group'))
             line_bot_api.leave_room(event.source.room_id)
         else:
             line_bot_api.reply_message(
@@ -269,105 +203,6 @@ def handle_text_message(event):
         line_bot_api.reply_message(event.reply_token, template_message)
     elif text1 == 'imagemap':
         pass
-    elif text1=="schedule":
-      Tcode=str(code())
-      try:
-        line_bot_api.push_message('%s'%str(event.source.room_id), TextSendMessage(text='The following text is your instant Tcode.Please copy and paste Tcode on Google form:'))
-        line_bot_api.push_message('%s'%str(event.source.room_id), TextSendMessage(text='%s'%Tcode))
-      except LineBotApiError as e:
-        print("Got exception from LINE Messaging API: %s\n" % e.message)     
-      bubble = BubbleContainer(
-            direction='ltr',
-            hero=ImageComponent(
-                url="https://www.dropbox.com/s/ihn336paj1hgq1i/logo.jpg?raw=1",
-                size='full',
-                aspect_ratio='20:13',
-                aspect_mode='cover',
-                action=URIAction(uri="https://docs.google.com/forms/d/e/1FAIpQLSeW3BpNtH70rrR3MRksWpQWCmhzjwNKCFhAh_JojAxLexGMzw/viewform?c=0&w=1", label='Schedule') 
-            ),
-            body=BoxComponent(
-                layout='vertical',
-                contents=[
-                    # title
-                    TextComponent(text='Schedule your event', weight='bold', size='xl'),
-                    BoxComponent(
-                        layout='vertical',
-                        margin='lg',
-                        spacing='sm',
-                        contents=[
-                            BoxComponent(
-                                layout='baseline',
-                                spacing='sm',
-                                contents=[
-                                    TextComponent(
-                                        text='content',
-                                        color='#aaaaaa',
-                                        size='sm',
-                                        flex=1
-                                    ),
-                                    TextComponent(
-                                        text='Google Form',
-                                        wrap=True,
-                                        color='#666666',
-                                        size='sm',
-                                        flex=5
-                                    )
-                                ],
-                            ),
-                            BoxComponent(
-                                layout='baseline',
-                                spacing='sm',
-                                contents=[
-                                    TextComponent(
-                                        text='TCode',
-                                        color='#aaaaaa',
-                                        size='sm',
-                                        flex=1
-                                    ),
-                                    TextComponent(
-                                        text="%s"%Tcode,
-                                        wrap=True,
-                                        color='#666666',
-                                        size='sm',
-                                        flex=5,
-                                    ),
-                                ],
-                            ),
-                        ],
-                    )
-                ],
-            ),
-            footer=BoxComponent(
-                layout='vertical',
-                spacing='sm',
-                contents=[
-                    # callAction, separator, websiteAction
-                    SpacerComponent(size='sm'),
-                    # callAction
-                    ButtonComponent(
-                        style='link',
-                        height='sm',
-                        action=URIAction(label='Click to schedule your event', uri="https://docs.google.com/forms/d/e/1FAIpQLSeW3BpNtH70rrR3MRksWpQWCmhzjwNKCFhAh_JojAxLexGMzw/viewform?c=0&w=1"),
-                    ),
-                    # separator
-                    SeparatorComponent(),
-                    # websiteAction
-                    ButtonComponent(
-                        style='link',
-                        height='sm',
-                        action=URIAction(label='Click to go other bot', uri="https://line.me/R/ti/p/%40ran6652m") 
-                    )
-                ]
-            ),
-        )
-      message = FlexSendMessage(alt_text="Event Schedule", contents=bubble)
-      line_bot_api.reply_message(
-            event.reply_token,
-            message
-         )
-
-
-       
     elif text1 in ["h121","h111","h112","h113","h114","h115","h116","h118"]:
         zurag={"h121":"https://www.dropbox.com/s/lc94cqfzttgx7mv/h121.jpg?raw=1","h111":"https://www.dropbox.com/s/rn9sn5ylimphdir/h111.jpg?raw=1","hoh":"https://www.dropbox.com/s/hpxkwcq9ej6sskz/hoh.jpg?raw=1","h112":"https://www.dropbox.com/s/29xlk7clggixhfz/h112.jpg?raw=1","h113":"https://www.dropbox.com/s/nsxcdaycm0b2lyi/h113.jpg?raw=1","h114":"https://www.dropbox.com/s/718s7wtk4uopjni/h114.jpg?raw=1","h115":"https://www.dropbox.com/s/und4scgb7ae69l5/h115.jpg?raw=1","h116":"https://www.dropbox.com/s/lcvum4xr5p3o7l0/h116.jpg?raw=1","h118":"https://www.dropbox.com/s/vq2oqeglcb5t161/h118.jpg?raw=1"}
         building_pic={"h121":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h111":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h112":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h113":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h114":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h115":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h116":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h118":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1"}
@@ -945,12 +780,8 @@ def handle_text_message(event):
             event.reply_token,
             message
         )
-    elif text1=="event.test":
-    	scheduler.add_job(tick, 'date', run_date=datetime(2018, 10, 21, 20, 50), args=[])
-    elif text1=="check events":
-    	scheduler.print_jobs()
     else:
-        print(text)
+        pass
         
 
 
@@ -1154,14 +985,8 @@ def handle_beacon(event):
         TextSendMessage(
             text='Got beacon event. hwid={}, device_message(hex string)={}'.format(
                 event.beacon.hwid, event.beacon.dm)))
-# scheduler = BackgroundScheduler()
-# # scheduler.add_job(tick, 'date', run_date=datetime(year, month, day, hour, minute), args=[])
-# for e in events:
-# 	print(e)
-# 	scheduler.add_job(tick, 'date', run_date=datetime(e.year, e.month, e.day, e.hour, e.minute), args=[])
 
-scheduler.add_job(refresh, 'interval', seconds=30)
-scheduler.start()
+
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
         usage='Usage: python ' + __file__ + ' [--port <port>] [--help]'
@@ -1174,8 +999,3 @@ if __name__ == "__main__":
     make_static_tmp_dir()
 
     app.run(debug=options.debug, port=options.port)
-try:
-  while True:
-    time.sleep(2)
-except (KeyboardInterrupt, SystemExit):
-    scheduler.shutdown()
