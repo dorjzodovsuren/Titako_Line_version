@@ -1160,7 +1160,7 @@ def handle_beacon(event):
 # 	print(e)
 # 	scheduler.add_job(tick, 'date', run_date=datetime(e.year, e.month, e.day, e.hour, e.minute), args=[])
 
-scheduler.add_job(refresh, 'interval', seconds=20)
+scheduler.add_job(refresh, 'interval', seconds=30)
 scheduler.start()
 if __name__ == "__main__":
     arg_parser = ArgumentParser(
