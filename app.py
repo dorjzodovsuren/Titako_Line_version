@@ -37,10 +37,7 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-# LINE_CHANNEL_ACCESS_TOKEN='vLNF7pYEHQvxMU4EMlv+LMElXzKhB9ExpmseoSDiJjAjA2IAMEj4fwPM6a21wIUkkoF1Vx1aYToDovSLOwJw4N1xT3E9Cxi3TT+BQsRnaymPLm3YrwdZrlLJewg3thFW//5oP6ib7SG7tpqyfsvabgdB04t89/1O/w1cDnyilFU='
-# LINE_CHANNEL_SECRET='9c9cafd7f156f8ed3c652a88529e5fb2'
-
-#get channel_secret and channel_access_token from your environment variable
+# get channel_secret and channel_access_token from your environment variable
 channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
 channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
 if channel_secret is None:
@@ -50,8 +47,8 @@ if channel_access_token is None:
     print('Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
     sys.exit(1)
 
-line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(LINE_CHANNEL_SECRET)
+line_bot_api = LineBotApi(channel_access_token)
+handler = WebhookHandler(channel_secret)
 
 static_tmp_path = os.path.join(os.path.dirname(__file__), 'static', 'tmp')
 global dialogue
