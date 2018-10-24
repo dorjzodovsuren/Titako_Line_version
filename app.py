@@ -128,14 +128,8 @@ def make_static_tmp_dir():
             pass
         else:
             raise
-def tick(text=None):
- try:
- 	if (text==None):
-	    line_bot_api.push_message('R6fde38214a90b44cadbb8aa20241dc70', TextSendMessage(text='Thank you for using our service. we try our best to provide the simple and fast service for saving your prestigious time. Today we have some interesting event at Tokyo tech .Please do not forget to visit Mongolian tent to taste such a rare flavours.We hope see you tomorrow.\nhttps://line.me/R/ti/p/%40ran6652m'))
-	else:
-	    line_bot_api.push_message('R6fde38214a90b44cadbb8aa20241dc70', TextSendMessage(text='Test success'))
- except LineBotApiError as e:
-    print("Got exception from LINE Messaging API: %s\n" % e.message)
+def tick():
+ line_bot_api.push_message('R6fde38214a90b44cadbb8aa20241dc70', TextSendMessage(text='Thank you for using our service. we try our best to provide the simple and fast service for saving your prestigious time. Today we have some interesting event at Tokyo tech .Please do not forget to visit Mongolian tent to taste such a rare flavours.We hope see you tomorrow.\nhttps://line.me/R/ti/p/%40ran6652m'))
 
 def code():
  tooloh=[]
