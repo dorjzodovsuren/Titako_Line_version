@@ -1,0 +1,15 @@
+ishikawadai 10
+east area 4
+south area 1
+east area 2
+ishikawadai 4
+ishikawadai 5
+ishikawadai 6
+east area 1
+ishikawadai 1
+ishikawadai 2
+ishikawadai 3
+east area 3
+south area 2
+ishikawadai 8
+ishikawadai 9
