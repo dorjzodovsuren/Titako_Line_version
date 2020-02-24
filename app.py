@@ -2,6 +2,15 @@ from __future__ import unicode_literals
 import random
 import errno
 import os
+from io import BytesIO
+from oauth2client.service_account import ServiceAccountCredentials
+
+from flask import Flask, request, abort
+import tensorflow as tf
+import numpy as np
+import pandas as pd
+import urllib
+import cv2
 import sys
 import tempfile
 from argparse import ArgumentParser
@@ -32,30 +41,46 @@ from linebot.models import (
 
 app = Flask(__name__)
 
-# get channel_secret and channel_access_token from your environment variable
-channel_secret = os.getenv('LINE_CHANNEL_SECRET', None)
-channel_access_token = os.getenv('LINE_CHANNEL_ACCESS_TOKEN', None)
+#Channel token set
+token_file=open("tokens.txt","r+")
+tokens=[i.replace("\n","") for i in token_file.readlines()]
+channel_access_token=tokens[0]
+channel_secret=tokens[1]
+
+
+#Image recognition model
+RETRAINED_LABELS_TXT_FILE_LOC = os.getcwd() + "/" + "retrained_labels.txt"
+RETRAINED_GRAPH_PB_FILE_LOC = os.getcwd() + "/" + "retrained_graph.pb"
+
+#image code scale
+SCALAR_RED = (0.0, 0.0, 255.0)
+SCALAR_BLUE = (255.0, 0.0, 0.0)
+
+#Checking if tokens are set
 if channel_secret is None:
-    print('Specify LINE_CHANNEL_SECRET as environment variable.')
+    print('Please provide your LINE_CHANNEL_SECRET as environment variable.')
     sys.exit(1)
 if channel_access_token is None:
-    print('Specify LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
+    print('PLease provide your LINE_CHANNEL_ACCESS_TOKEN as environment variable.')
     sys.exit(1)
 
+#Line Webhook process
 line_bot_api = LineBotApi(channel_access_token)
 handler = WebhookHandler(channel_secret)
 
+#Define Photo saving dir
 static_tmp_path = os.path.join(os.path.dirname(__file__), 'static', 'tmp')
-global dialogue
-global story
+
+
+
 global q
 global b
-dialogue = []
-story = []
-timeline = 0
-seq = []
+global o
+
+
 q=[]
 b=[]
+o=[]
 def shortcut(utga):
  q=[]
  b=[]
@@ -99,8 +124,73 @@ def make_static_tmp_dir():
             pass
         else:
             raise
+def errorr():
+    sticker_ids = ["https://www.dropbox.com/s/bgvbm50eaffhyn5/1.jpg?raw=1","https://www.dropbox.com/s/u1scfr8of3t5g9b/2.jpg?raw=1","https://www.dropbox.com/s/wh9trg611b6tuf1/3.jpg?raw=1","https://www.dropbox.com/s/57ybqq2rq5jcihy/4.jpg?raw=1"]
+    return random.choice(sticker_ids)
 
+def url_to_image(url):
+	image = np.asarray( bytearray( url.read() ), dtype="uint8" )   #byte image
+	image = cv2.imdecode( image , cv2.IMREAD_COLOR )
+	return image
 
+def image_recognition( image ):
+    classifications = [  ]
+    for currentLine in tf.gfile.GFile( RETRAINED_LABELS_TXT_FILE_LOC ):
+        classification = currentLine.rstrip()
+        classifications.append( classification )
+
+    # load the graph from file
+    with tf.gfile.FastGFile( RETRAINED_GRAPH_PB_FILE_LOC, 'rb' ) as retrainedGraphFile:
+        # instantiate a GraphDef object
+        graphDef = tf.GraphDef()
+        # read in retrained graph into the GraphDef object
+        graphDef.ParseFromString( retrainedGraphFile.read() )
+        # import the graph into the current default Graph, note that we don't need to be concerned with the return value
+        _ = tf.import_graph_def( graphDef, name='' )
+   
+
+    with tf.Session() as sess:
+       
+            openCVImage = url_to_image( image )
+            if openCVImage is None:
+              #print("unable to open " + fileName + " as an OpenCV image")
+                print( "No images were sent!!! " )
+            finalTensor = sess.graph.get_tensor_by_name('final_result:0')
+
+            tfImage = np.array(openCVImage)[:, :, 0:3]
+            
+            # run the network to get the predictions
+            predictions = sess.run(finalTensor, {'DecodeJpeg:0': tfImage})
+
+            # sort predictions from most confidence to least confidence
+            sortedPredictions = predictions[0].argsort()[-len(predictions[0]):][::-1]
+
+            onMostLikelyPrediction = True
+            for prediction in sortedPredictions:
+                strClassification = classifications[prediction]
+
+                # if the classification (obtained from the directory name) ends with the letter "s", remove the "s" to change from plural to singular
+                if strClassification.endswith("s"):
+                    strClassification = strClassification[:-1]
+                # end if
+
+                # get confidence, then get confidence rounded to 2 places after the decimal
+                confidence = predictions[0][prediction]
+
+                # if we're on the first (most likely) prediction, state what the object appears to be and show a % confidence to two decimal places
+                if onMostLikelyPrediction:
+                    # get the score as a %
+                    scoreAsAPercent = confidence * 100.0
+                    # show the result to std out
+                    print("the object appears to be a " + strClassification + ", " + "{0:.2f}".format(scoreAsAPercent) + "% confidence")
+                    # write the result on the image
+#                     line_bot_api.push_message('R6fde38214a90b44cadbb8aa20241dc70', TextSendMessage(text='Confidence is ' + "{0:.2f} ".format(scoreAsAPercent) + "\n%s"%strClassification))
+                    onMostLikelyPrediction = False
+                if float("{0:.2f} ".format(scoreAsAPercent))>45.00:
+                 return strClassification
+                else:
+                 return "Please submit your picture again"
+                 
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -127,7 +217,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     text = event.message.text
-    text1 = text.lower()
+    text1 = text.strip().lower()
     zassan=shortcut(text1)
 
     if text1 == 'profile':
@@ -168,6 +258,7 @@ def handle_text_message(event):
         template_message = TemplateSendMessage(
             alt_text='TiTAX is greeting', template=buttons_template)
         line_bot_api.reply_message(event.reply_token, template_message)
+
     elif text1 == 'instruction':
         carousel_template = CarouselTemplate(columns=[
             CarouselColumn(text='English version', title='Instruction', actions=[
@@ -797,29 +888,126 @@ def handle_location_message(event):
 
 
 @handler.add(MessageEvent, message=StickerMessage)
-def handle_sticker_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        StickerSendMessage(
-            package_id=event.message.package_id,
-            sticker_id=event.message.sticker_id )
-    )
+# def handle_sticker_message(event):
+#     line_bot_api.reply_message(
+#         event.reply_token,
+#         StickerSendMessage(
+#             package_id=event.message.package_id,
+#             sticker_id=event.message.sticker_id )
+#     )
 
 
-# Other Message Type
 @handler.add(MessageEvent, message=(ImageMessage, VideoMessage, AudioMessage))
 def handle_content_message(event):
     if isinstance(event.message, ImageMessage):
-        #ext = 'jpg'
-        pass
+        ext = 'jpg'
     elif isinstance(event.message, VideoMessage):
-        #ext = 'mp4'
         pass
     elif isinstance(event.message, AudioMessage):
-       #ext = 'm4a'
         pass
     else:
         return
+
+    message_content = line_bot_api.get_message_content(event.message.id)
+    image = BytesIO(message_content.content)
+   
+    with tempfile.NamedTemporaryFile(dir=static_tmp_path, prefix=ext + '-', delete=False) as tf:
+        for chunk in message_content.iter_content():
+            tf.write(chunk)
+            o.append(chunk)
+        tempfile_path = tf.name
+
+    dist_path = tempfile_path + '.' + ext
+    dist_name = os.path.basename(dist_path)
+    os.rename(tempfile_path, dist_path)
+    #link=str(request.host_url + os.path.join('static', 'tmp', dist_name))
+    
+    text1=image_recognition(image)
+    print(text1)
+    if text1 in ["mountain bike","road bike","Please submit your picture again","ishikawadai 1","ishikawadai 2","ishikawadai 3","ishikawadai 4","ishikawadai 5","ishikawadai 6","ishikawadai 8","ishikawadai 9","ishikawadai 10","east area 1","east area 2","east area 3","east area 4","south area 1","south area 2"]:
+     zurag={"mountain bike":"https://hollandbikeshop.com/en-gb/buying-a-bicycle/mountain-bike/","road bike":"https://www.bikeradar.com/road/","Please submit your picture again":"https://www.dropbox.com/s/xjvc90mbxvfs41k/Instruction.pdf?raw=1","ishikawadai 1":"https://www.google.com/maps/place/35%C2%B036'04.2%22N+139%C2%B041'04.1%22E/@35.6011484,139.6494646,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6011541!4d139.6844837","ishikawadai 2":"https://www.google.com/maps/place/35%C2%B036'06.4%22N+139%C2%B041'04.1%22E/@35.6017754,139.6494586,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6017808!4d139.6844782","ishikawadai 3":"https://www.google.com/maps/place/35%C2%B036'05.6%22N+139%C2%B041'05.8%22E/@35.6015564,139.6499196,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6015617!4d139.6849389","ishikawadai 4":"https://www.google.com/maps/place/35%C2%B036'04.1%22N+139%C2%B041'06.1%22E/@35.6011234,139.6500026,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.601129!4d139.6850217","ishikawadai 5":"https://www.google.com/maps/place/35%C2%B036'02.3%22N+139%C2%B041'04.4%22E/@35.6006294,139.6495246,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6006349!4d139.6845441","ishikawadai 6":"https://www.google.com/maps/place/35%C2%B036'04.1%22N+139%C2%B041'06.1%22E/@35.6011234,139.6500026,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.601129!4d139.6850217","ishikawadai 8":"https://www.google.com/maps/place/35%C2%B036'03.1%22N+139%C2%B041'05.8%22E/@35.6008424,139.6499166,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6008483!4d139.6849365","ishikawadai 9":"https://www.google.com/maps/place/35%C2%B036'02.2%22N+139%C2%B041'06.0%22E/@35.6006104,139.6499666,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6006156!4d139.6849865","ishikawadai 10":"https://www.google.com/maps/place/35%C2%B036'01.0%22N+139%C2%B041'03.5%22E/@35.6002734,139.6492956,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6002789!4d139.684315","east area 1":"https://www.google.com/maps/place/35%C2%B036'16.1%22N+139%C2%B041'01.9%22E/@35.6044811,139.6751022,15z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6044824!4d139.6838569","east area 2":"https://www.google.com/maps/place/35%C2%B036'18.7%22N+139%C2%B041'03.9%22E/@35.6052005,139.6494834,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6052063!4d139.6844169","east area 3":"https://www.google.com/maps/place/35%C2%B036'18.3%22N+139%C2%B041'05.7%22E/@35.6050655,139.6499744,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6050714!4d139.6849082","east area 4":"https://www.google.com/maps/place/35%C2%B036'20.2%22N+139%C2%B041'04.8%22E/@35.6055955,139.6497194,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6056013!4d139.6846534","south area 1":"https://www.google.com/maps/place/35%C2%B036'18.7%22N+139%C2%B041'03.9%22E/@35.6052005,139.6494834,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6052063!4d139.6844169","south area 2":"https://www.google.com/maps/place/35%C2%B036'18.7%22N+139%C2%B041'03.9%22E/@35.6052005,139.6494834,13z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d35.6052063!4d139.6844169","h115":"https://www.dropbox.com/s/und4scgb7ae69l5/h115.jpg?raw=1","h116":"https://www.dropbox.com/s/lcvum4xr5p3o7l0/h116.jpg?raw=1","h118":"https://www.dropbox.com/s/vq2oqeglcb5t161/h118.jpg?raw=1"}
+     building_pic={"mountain bike":"https://www.dropbox.com/s/jrhyrkd9l4ttq8n/mountain%20bike.jpg?raw=1","road bike":"https://www.dropbox.com/s/8xnotgd824nlh42/road%20bike.jpg?raw=1","Please submit your picture again":errorr(),"ishikawadai 1":"https://www.dropbox.com/s/8zsbckwcyqpl8lo/I1.jpg?raw=1","ishikawadai 2":"https://www.dropbox.com/s/mv6ue8x81fu71lh/I2.jpg?raw=1","ishikawadai 3":"https://www.dropbox.com/s/2me9984qo6badpa/I3.jpg?raw=1","ishikawadai 4":"https://www.dropbox.com/s/ohw8itgo5ojnm4u/I4.jpg?raw=1","ishikawadai 5":"https://www.dropbox.com/s/ssaqtygxowwequc/I5.jpg?raw=1","ishikawadai 6":"https://www.dropbox.com/s/z1vqesr1uqzg9h9/I6.jpg?raw=1","ishikawadai 8":"https://www.dropbox.com/s/70nf8nd05sbnts1/I8.jpg?raw=1","ishikawadai 9":"https://www.dropbox.com/s/zq4k2pk5pa0g4g8/I9.jpg?raw=1","ishikawadai 10":"https://www.dropbox.com/s/uu9ghsxbu1d9zfl/International%20house.jpg?raw=1","east area 1":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","east area 2":"https://www.dropbox.com/s/nvdzun2bhcw2pe4/Administration%20buraeu%201.jpg?raw=1","east area 3":"https://www.dropbox.com/s/ihn336paj1hgq1i/logo.jpg?raw=1","east area 4":"https://www.dropbox.com/s/yldh85w4jqvhlf9/Gsic.jpg?raw=1","south area 1":"https://www.dropbox.com/s/yldh85w4jqvhlf9/Gsic.jpg?raw=1","south area 2":"https://www.dropbox.com/s/yldh85w4jqvhlf9/Gsic.jpg?raw=1","h116":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1","h118":"https://www.dropbox.com/s/gknlyhdaxw5mfdj/main%20building.jpg?raw=1"}
+     bubble = BubbleContainer(
+            direction='ltr',
+            hero=ImageComponent(
+                url=building_pic[text1],
+                size='full',
+                aspect_ratio='20:13',
+                aspect_mode='cover',
+                action=URIAction(uri=zurag[text1], label='label')
+            ),
+            body=BoxComponent(
+                layout='vertical',
+                contents=[
+                    # title
+                    TextComponent(text='%s'%text1.upper(), weight='bold', size='xl'),
+                    BoxComponent(
+                        layout='vertical',
+                        margin='lg',
+                        spacing='sm',
+                        contents=[
+                            BoxComponent(
+                                layout='baseline',
+                                spacing='sm',
+                                contents=[
+                                    TextComponent(
+                                        text='Place',
+                                        color='#aaaaaa',
+                                        size='sm',
+                                        flex=1
+                                    ),
+                                    TextComponent(
+                                        text='%s website'%text1.upper(),
+                                        wrap=True,
+                                        color='#666666',
+                                        size='sm',
+                                        flex=5
+                                    )
+                                ],
+                            ),
+                            BoxComponent(
+                                layout='baseline',
+                                spacing='sm',
+                                contents=[
+                                    TextComponent(
+                                        text='Time',
+                                        color='#aaaaaa',
+                                        size='sm',
+                                        flex=1
+                                    ),
+                                    TextComponent(
+                                        text="07:00 - 21:00",
+                                        wrap=True,
+                                        color='#666666',
+                                        size='sm',
+                                        flex=5,
+                                    ),
+                                ],
+                            ),
+                        ],
+                    )
+                ],
+            ),
+            footer=BoxComponent(
+                layout='vertical',
+                spacing='sm',
+                contents=[
+                    SpacerComponent(size='sm'),
+
+                    # websiteAction
+                    ButtonComponent(
+                        style='link',
+                        height='sm',
+                        action=URIAction(label='Click to go website', uri=zurag[text1])
+                    )
+                ]
+            ),
+        )
+    message = FlexSendMessage(alt_text="Image recognition", contents=bubble)
+    line_bot_api.reply_message(
+            event.reply_token,
+            message
+        )
 
 @handler.add(MessageEvent, message=StickerMessage)
 def handle_sticker_message(event):
@@ -991,7 +1179,7 @@ if __name__ == "__main__":
     arg_parser = ArgumentParser(
         usage='Usage: python ' + __file__ + ' [--port <port>] [--help]'
     )
-    arg_parser.add_argument('-p', '--port', type=int, default=8000, help='port')
+    arg_parser.add_argument('-p', '--port', type=int, default=4040, help='port')
     arg_parser.add_argument('-d', '--debug', default=False, help='debug')
     options = arg_parser.parse_args()
 
