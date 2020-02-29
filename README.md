@@ -5,7 +5,7 @@ Currently, i am trying to implement BERT basic model in conversation model. I wi
  To do:
  1. Clean the code
  2. Add Colab repo about how to train inception in image recognition task
- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1G8DdUfmcpAEEdp4hc1GysumJs3fEsMq2]
+ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)][(https://colab.research.google.com/drive/1G8DdUfmcpAEEdp4hc1GysumJs3fEsMq2]
 
 
  3. Add Colab repo about fine-tune BERT base model in conversation model
