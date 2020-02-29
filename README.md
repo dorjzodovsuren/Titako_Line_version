@@ -10,3 +10,10 @@ Currently, i am trying to implement BERT basic model in conversation model. I wi
 
  3. Add Colab repo about fine-tune BERT base model in conversation model
  4. Add the code explanation blog on the Medium at the end of this repo.
+
+### 2.c. Play with the _notebooks_ dynamically (on Google Colab) :boom:
+
+Anyone can use the [colab.research.google.com/notebook](https://colab.research.google.com/notebook) website (by [clicking](XXX) on the icon above) to run the notebook in her/his web-browser.
+You can then play with it as long as you like, for instance by modifying the values or experimenting with the code.
+
+- [Do_we_even_need_UCB.ipynb](https://colab.research.google.com/github/SMPyBandits/SMPyBandits/blob/master/notebooks/Do_we_even_need_UCB.ipynb)  [![Google Colab](https://badgen.net/badge/Launch/on%20Google%20Colab/blue?icon=terminal)](https://colab.research.google.com/github/SMPyBandits/SMPyBandits/blob/master/notebooks/Do_we_even_need_UCB.ipynb)
