@@ -3,7 +3,7 @@ This file is for those who want to build their own Line chatbot using python pro
 
 Currently, i am trying to implement BERT base_model on a service conversation. I will post the codes and colab link at the end of this project. 
  To do:
-### 1. Clean the code
+### 1. Clean code
 
 ### 2. Play with the training code (on Google Colab):
 
