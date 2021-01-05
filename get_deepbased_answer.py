@@ -106,9 +106,9 @@ def run_prediction(question_text, context_texts):
                 result = SquadResult(unique_id, start_logits, end_logits)
                 all_results.append(result)
 
-    output_prediction_file = "predictions.json"
-    output_nbest_file = "nbest_predictions.json"
-    output_null_log_odds_file = "null_predictions.json"
+    output_prediction_file = "./temp_result/predictions.json"
+    output_nbest_file = "./temp_result/nbest_predictions.json"
+    output_null_log_odds_file = "./temp_result/null_predictions.json"
 
     predictions = compute_predictions_logits(
         examples,
