@@ -14,7 +14,7 @@ DONE
 
 ### 3. Add Colab repo about fine-tune BERT base model in conversation model
 
-- [Deeplearning_Rulebased_chatbot.ipynb](https://colab.research.google.com/drive/1FALb2lS3Ra3YpQmssGVAk1KfNkU1Qr2R?usp=sharing)  [![Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1FALb2lS3Ra3YpQmssGVAk1KfNkU1Qr2R?usp=sharing)
+- [Deeplearning_Rulebased_chatbot.ipynb](https://colab.research.google.com/drive/1fjs_ILra0PC3jUYXYbiHD4gK0s9mk6_i?usp=sharing)  [![Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1fjs_ILra0PC3jUYXYbiHD4gK0s9mk6_i?usp=sharing)
 
 ### 4. Add the code explanation blog on the Medium at the end of this repo.
 
